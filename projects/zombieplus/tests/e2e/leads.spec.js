@@ -36,17 +36,27 @@ test('Deve cadastrar um lead na fila de espera', async ({ page }) => {
 
 // Caminhos tristes
 
-test('Não cadastrar lead repetido', async ({ page }) => {
+test('Não cadastrar lead repetido', async ({ page, request }) => {
 
-  const leadName = faker.person.fullName() 
+  const leadName = faker.person.fullName()
   const leadEmail = faker.internet.email()
-
+  
   //Cadastro certo, mensagem certa
-  await landingPage.submitLeadForm(leadName, leadEmail)
-  const msgSucesso = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!'
-  await toast.HaveText(msgSucesso);
+  const newLead = await request.post('http://localhost:3333/leads', {
+    data: {
+      name: leadName,
+      email: leadEmail
+    }
+  })
+expect(newLead.ok()).toBeTruthy()
+
+
+  // await landingPage.submitLeadForm(leadName, leadEmail)
+  // const msgSucesso = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!'
+  // await toast.HaveText(msgSucesso);
 
   //Cadastra duplicado, mensagem de erro
+  await landingPage.visit()
   await landingPage.openLeadModal()
   await landingPage.submitLeadForm(leadName, leadEmail)
   let mensagem = 'O endereço de e-mail fornecido já está registrado em nossa fila de espera.'
