@@ -54,9 +54,9 @@ expect(newLead.ok()).toBeTruthy()
   // await landingPage.submitLeadForm(leadName, leadEmail)
   // const msgSucesso = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!'
   // await toast.HaveText(msgSucesso);
-
+  
   //Cadastra duplicado, mensagem de erro
-  await landingPage.visit()
+  await page.reload() // Atualiza a página após o cadastro. Também poderia utilizar o page.goto() para recarregar a página
   await landingPage.openLeadModal()
   await landingPage.submitLeadForm(leadName, leadEmail)
   let mensagem = 'O endereço de e-mail fornecido já está registrado em nossa fila de espera.'
