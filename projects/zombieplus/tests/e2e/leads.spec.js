@@ -20,7 +20,7 @@ test.beforeEach(async ({ page }) => {
 // Caminho Feliz
 test('Deve cadastrar um lead na fila de espera', async ({ page }) => {
 
-  const leadName = faker.person.fullName() 
+  const leadName = faker.person.fullName()
   const leadEmail = faker.internet.email()
 
 
@@ -29,7 +29,7 @@ test('Deve cadastrar um lead na fila de espera', async ({ page }) => {
 
   const mensagem = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!'
   // ToastHaveText é usado para verificar se o toast de sucesso aparece
-  await toast.HaveText(mensagem);
+  await toast.containText(mensagem);
 
 });
 
@@ -40,7 +40,7 @@ test('Não cadastrar lead repetido', async ({ page, request }) => {
 
   const leadName = faker.person.fullName()
   const leadEmail = faker.internet.email()
-  
+
   //Cadastro certo, mensagem certa
   const newLead = await request.post('http://localhost:3333/leads', {
     data: {
@@ -48,19 +48,14 @@ test('Não cadastrar lead repetido', async ({ page, request }) => {
       email: leadEmail
     }
   })
-expect(newLead.ok()).toBeTruthy()
+  expect(newLead.ok()).toBeTruthy()
 
-
-  // await landingPage.submitLeadForm(leadName, leadEmail)
-  // const msgSucesso = 'Agradecemos por compartilhar seus dados conosco. Em breve, nossa equipe entrará em contato!'
-  // await toast.HaveText(msgSucesso);
-  
   //Cadastra duplicado, mensagem de erro
   await page.reload() // Atualiza a página após o cadastro. Também poderia utilizar o page.goto() para recarregar a página
   await landingPage.openLeadModal()
   await landingPage.submitLeadForm(leadName, leadEmail)
   let mensagem = 'O endereço de e-mail fornecido já está registrado em nossa fila de espera.'
-  await toast.HaveText(mensagem)
+  await toast.containText(mensagem)
 })
 
 test('Não deve cadastrar com e-mail incorreto', async ({ page }) => {

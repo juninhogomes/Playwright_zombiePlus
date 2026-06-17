@@ -30,7 +30,7 @@ test('Não deve logar com senha incorreta', async ({ page }) => {
 
     const message = 'Oops!Ocorreu um erro ao tentar efetuar o login. Por favor, verifique suas credenciais e tente novamente.'
 
-    await toast.HaveText(message)
+    await toast.containText(message)
 })
 
 test('E-mail obrigatório não preenchido', async ({page}) => {
