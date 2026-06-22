@@ -1,4 +1,4 @@
-import { test, expect } from '../support/index.js';
+import { test, expect } from '../support';
 import { executeSQL } from '../support/database.js';
 
 const data = require('../support/fixtures/movies.json')
@@ -20,5 +20,20 @@ test('Deve cadastrar um novo filme', async ({page}) => {
     await expect(page.toast.containText(mensagemSucesso))
 
     await executeSQL(`DELETE FROM public.movies WHERE title = '${movie.title}';`)
+})
+
+
+test('Campos obrigatórios não preenchidos', async({page}) => {
+    const movie = data.guerra_mundial_z
+
+    await page.login.visit()
+    await page.login.submit('admin@zombieplus.com', 'pwd123')
+    await page.movies.isLoggedIn()
+
+    await page.movies.goForm()
+    await page.getByRole('button', {name: 'Cadastrar'}).click()
+
+    const alert = page.locator('span[class$=alert]')
+    await expect(alert)
 
 })

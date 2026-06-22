@@ -1,4 +1,5 @@
 import { test, expect } from '../support'; // Já lê o index.js que tem todos os POM na pasta
+//import { expect } from '@playwright/test';
 
 test.beforeEach(async ({page}) => {
     await page.login.visit()
@@ -16,8 +17,7 @@ test('Não deve logar com senha incorreta', async ({ page }) => {
 
     await page.login.submit('admin@zombieplus.com', '12345')
 
-    const message = 'Oops!Ocorreu um erro ao tentar efetuar o login. Por favor, verifique suas credenciais e tente novamente.'
-
+    const message = 'Ocorreu um erro ao tentar efetuar o login. Por favor, verifique suas credenciais e tente novamente.'
     await page.toast.containText(message)
 })
 

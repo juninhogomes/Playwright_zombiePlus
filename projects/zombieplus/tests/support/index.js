@@ -1,4 +1,4 @@
-import { test as base, expect as playwrightExpect } from '@playwright/test';
+import { test as base, expect} from '@playwright/test';
 import { ClassLoginPage } from '../pages/ClassLoginPage';
 import { ClassLandingPage } from '../pages/ClassLandingPage';
 import { Toast, Alert } from '../pages/Components.js';
@@ -16,5 +16,4 @@ const test = base.extend({
         await use(page)}
 })
 
-export {test}
-export const expect = playwrightExpect;
+export {test, expect}
