@@ -14,10 +14,10 @@ export class Login {
         await expect(LoginForm).toBeVisible()
     }
 
-    async do(email, password) {
+    async do(email, password, username) {
         this.visit()
         this.submit(email, password)
-        this.isLoggedIn()
+        this.isLoggedIn(username)
     }
 
     async submit(email, password) {
@@ -27,8 +27,11 @@ export class Login {
     }
 
     
-    async isLoggedIn() {
-        await expect(this.page).toHaveURL(/.*admin/)
+    async isLoggedIn(username) {
+        const loggedUser = this.page.locator('.logged-user')
+        await expect(loggedUser).toHaveText(`Olá, ${username}`)
+        //await this.page.locator('.logged-user')
+        //await expect(this.page).toHaveURL(/.*admin/)
     }
 
 

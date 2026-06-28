@@ -10,7 +10,7 @@ test('Deve cadastrar um novo filme', async ({page}) => {
     await executeSQL(`DELETE FROM public.movies WHERE title = '${movie.title}';`)
 
 
-    await page.login.do('admin@zombieplus.com', 'pwd123')
+    await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin')
 
 
     await page.movies.create(movie.title, movie.overview, movie.company, movie.release_year)
@@ -22,7 +22,7 @@ test('Deve cadastrar um novo filme', async ({page}) => {
 
 
 test('Campos obrigatórios não preenchidos', async({page}) => {
-    await page.login.do('admin@zombieplus.com', 'pwd123')
+    await page.login.do('admin@zombieplus.com', 'pwd123', 'Admin')
     await page.movies.goForm()
     await page.getByRole('button', {name: 'Cadastrar'}).click()
     const alert = page.locator('span[class$=alert]')

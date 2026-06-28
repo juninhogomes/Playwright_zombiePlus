@@ -1,4 +1,4 @@
-import { test, expect } from '../support'; // Já lê o index.js que tem todos os POM na pasta
+import { test } from '../support'; // Já lê o index.js que tem todos os POM na pasta
 //import { expect } from '@playwright/test';
 
 test.beforeEach(async ({page}) => {
@@ -9,7 +9,7 @@ test.beforeEach(async ({page}) => {
 test('Deve logar como administrador', async ({ page }) => {
 
     await page.login.submit('admin@zombieplus.com', 'pwd123')
-    await page.login.isLoggedIn()
+    await page.login.isLoggedIn('Admin')
     })
 
 // Caminhos tristes
